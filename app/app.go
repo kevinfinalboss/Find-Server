@@ -38,6 +38,11 @@ func Generate() *cli.App {
 			Usage:  "Busca o número da porta de um serviço em um protocolo",
 			Action: findPort,
 		},
+		{
+			Name:   "cname",
+			Usage:  "Busca o nome canônico (CNAME) de um host",
+			Action: findCname,
+		},
 	}
 
 	return app
@@ -79,4 +84,17 @@ func findPort(c *cli.Context) {
 	}
 
 	fmt.Printf("O número da porta do serviço %s no protocolo %s é %d\n", service, protocol, port)
+}
+
+func findCname(c *cli.Context) {
+	host := c.String("host")
+
+	cname, error := net.LookupCNAME(host)
+	if error != nil {
+		log.Fatal(error)
+	}
+
+	for _, cnames := range cname {
+		fmt.Println(cnames)
+	}
 }
