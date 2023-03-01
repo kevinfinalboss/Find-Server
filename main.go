@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Iniciando")
+	fmt.Println("Iniciando a aplicação")
 
 	application := app.Generate()
 	if error := application.Run(os.Args); error != nil {
