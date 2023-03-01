@@ -13,16 +13,18 @@ func Generate() *cli.App {
 	app.Name = "Aplicação em Linha de Comando"
 	app.Usage = "Busca de IP e nome de servidores"
 
+	flags := []cli.Flag{
+		cli.StringFlag{
+			Name:  "host",
+			Value: "kevindev.com.br",
+		},
+	}
+
 	app.Commands = []cli.Command{
 		{
-			Name:  "ip",
-			Usage: "Busca IP de servidores",
-			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "host",
-					Value: "kevindev.com.br",
-				},
-			},
+			Name:   "ip",
+			Usage:  "Busca IP de servidores",
+			Flags:  flags,
 			Action: findIp,
 		},
 	}
