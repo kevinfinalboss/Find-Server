@@ -33,6 +33,11 @@ func Generate() *cli.App {
 			Flags:  flags,
 			Action: findServers,
 		},
+		{
+			Name:   "porta",
+			Usage:  "Busca o número da porta de um serviço em um protocolo",
+			Action: findPort,
+		},
 	}
 
 	return app
@@ -62,4 +67,16 @@ func findServers(c *cli.Context) {
 	for _, server := range servers {
 		fmt.Println(server.Host)
 	}
+}
+
+func findPort(c *cli.Context) {
+	service := c.Args().Get(0)
+	protocol := c.Args().Get(1)
+
+	port, err := net.LookupPort(protocol, service)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("O número da porta do serviço %s no protocolo %s é %d\n", service, protocol, port)
 }
